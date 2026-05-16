@@ -1,0 +1,4 @@
+title: Phan Anh | AI & Data Science Portfolio
+theme: jekyll-theme-minimal # Hoặc theme khác bạn đã chọn trong Settings
+description: Blog sharing Machine Learning, Deep Learning and personal projects .
+remote_theme: pages-themes/minimal@v0.2.0 # Đảm bảo theme chạy mượt trên GitHub Pages
