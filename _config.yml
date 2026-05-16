@@ -1,4 +1,14 @@
+# Thông tin cá nhân
 title: Phan Anh | AI & Data Science Portfolio
-theme: jekyll-theme-minimal # Hoặc theme khác bạn đã chọn trong Settings
-description: Blog sharing Machine Learning, Deep Learning and personal projects .
-remote_theme: pages-themes/minimal@v0.2.0 # Đảm bảo theme chạy mượt trên GitHub Pages
+author: Phan Anh
+description: Trang web cá nhân giới thiệu các dự án Nghiên cứu & Phát triển trong lĩnh vực Trí tuệ nhân tạo.
+
+# Cấu hình Giao diện (Theme)
+theme: jekyll-theme-minimal
+remote_theme: pages-themes/minimal@v0.2.0
+
+# Đường dẫn liên kết mạng xã hội (Theme Minimal hỗ trợ sẵn ở sidebar)
+github_username: kizzzbk # Đổi thành tên tài khoản GitHub thật của bạn
+
+# Cấu hình hiển thị công thức toán học nếu cần
+mathjax: true
