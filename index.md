@@ -13,8 +13,11 @@ I am currently a 3rd year of college studying **Artificial Intelligence & Data S
 * **AI & Machine Learning:** Scikit-learn, PyTorch, LightGBM, `hmmlearn`
 * **Data Engineering:** Apache Spark Streaming, Apache Kafka, MongoDB, Docker
 * **Hệ điều hành:** Ubuntu Linux
-
+---
+## 📝 Bài viết chia sẻ kiến thức
+* [Chia sẻ kiến thức về Mô hình Markov ẩn (HMM)](/hmm-sharing/)
 ---
 ## 📬 Liên hệ
 * **Email:** phananh7105@gmail.com
 * **GitHub:** [@kizzzbk](https://github.com/kizzzbk)
+
