@@ -6,6 +6,8 @@
 
 ### a. What is Markov Chain?
 
+$$AGTH$$
+
 Imagine you want to predict the weather in a small town. You might simplify the possibilities to just two states: "Sunny" and "Rainy".
 
 You start observing the weather for several days and notice a pattern:
