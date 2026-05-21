@@ -1,3 +1,13 @@
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      processEscapes: true
+    }
+  };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
 ## 1.1. From Markov Chain to Hidden Markov Model (HMM)
 
 ### a. What is Markov Chain?
@@ -61,7 +71,7 @@ The actual weather (Sunny/Rainy) is the **Hidden State**. You can't see it.
 
 The friend's action (Umbrella/Bike/Walk) is the **Observable Emission**. You can hear it.
 
-So earlier in the Markov Chain example, we have the transition matrix $A$:
+So earlier in the Markov Chain example, we have the transition matrix $$A$$:
 
 $$A = \begin{bmatrix} 0.9 & 0.1 \\ 0.5 & 0.5 \end{bmatrix}$$
 
