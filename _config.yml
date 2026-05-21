@@ -11,4 +11,6 @@ remote_theme: pages-themes/minimal@v0.2.0
 github_username: kizzzbk # Đổi thành tên tài khoản GitHub thật của bạn
 
 # Cấu hình hiển thị công thức toán học nếu cần
-mathjax: true
+markdown: kramdown
+kramdown:
+  math_engine: mathjax
