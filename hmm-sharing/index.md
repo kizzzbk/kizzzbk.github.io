@@ -85,7 +85,7 @@ To understand how HMM works, we need to understand how it made of. A complete de
 $$\lambda = (A, B, \pi)$$
 
 Where:
-* **$A$**: Transition matrix - we've been introduced in the last section.
+* **$ A $**: Transition matrix - we've been introduced in the last section.
 * **$B$**: Emission matrix - we've been introduced in the last section.
 * **$\pi$**: Initial state distribution - define the probability of starting in a particular state.
 
