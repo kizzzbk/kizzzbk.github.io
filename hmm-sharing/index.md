@@ -81,7 +81,7 @@ where rows correspond to the Hidden States (Sunny, Rainy) and columns correspond
 
 # 2. The core theory - Math behind HMM
 ## 2.1. The Triplet Parameters (A, B, $\pi$)
-To understand how HMM works, we need to understand how it made of. A complete definition of an HMM requires the following components. A **model** $\lambda$ is define as:
+To understand how HMM works, we need to understand how it made of. A complete definition of an HMM requires the following components. A **model** $$\lambda$$ is define as:
 $$\lambda = (A, B, \pi)$$
 
 Where:
