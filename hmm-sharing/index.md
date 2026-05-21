@@ -1,14 +1,8 @@
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
-
 ## 1.1. From Markov Chain to Hidden Markov Model (HMM)
 
 ### a. What is Markov Chain?
 
-
-
-Imagine you want to predict the weather in a small town. $$AGTH$$ You might simplify the possibilities to just two states: "Sunny" and "Rainy". 
+Imagine you want to predict the weather in a small town. You might simplify the possibilities to just two states: "Sunny" and "Rainy". 
 
 You start observing the weather for several days and notice a pattern:
 
@@ -73,7 +67,7 @@ $$A = \begin{bmatrix} 0.9 & 0.1 \\ 0.5 & 0.5 \end{bmatrix}$$
 
 which define the connection between this current state to the next state (or between the current **hidden state** to the next **hidden state** in the HMM case). 
 
-Now, in the HMM section, we have another matrix which define the connection between the **hidden states** and the **observable emissions**. This matrix is called the **Emission Probabilities** (or Output Probabilities) $$B$$:
+Now, in the HMM section, we have another matrix which define the connection between the **hidden states** and the **observable emissions**. This matrix is called the **Emission Probabilities** (or Output Probabilities) $$B$$.
 
 $$B = \begin{bmatrix} 0.1 & 0.2 & 0.7 \\ 0.6 & 0.3 & 0.1 \end{bmatrix}$$
 
