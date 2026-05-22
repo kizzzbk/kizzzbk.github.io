@@ -135,7 +135,7 @@ This assumption simplifies the model by reducing the dependency of a state to on
 The probability of an observation $O_t$ at time $t$ depends only on the hidden state $q_t$ at that same time $t$.Mathematically, this is expressed as:
 $$P(O_t | O_{t-1}, O_{t-2}, ..., O_1, q_t, q_{t-1}, ..., q_1) = P(O_t | q_t)$$
 
-> **Note**: When we are talking about **Hidden state $q$**, we are assuming that the next hidden state $q_t$ only depends on the current hidden state $q_{t-1}$, not the previous hidden states $q_{t-1}, q_{t-2}, ..., q_1$. On the other hand, when we are talking about **Observations $o$**, we are assuming that the current observation $o_t$ depends only on the current hidden state $q_t$, **not** the **previous hidden states** $q_{t-1}, q_{t-2}, ..., q_1$ or **previous observations** $o_{t-1}, o_{t-2}, ..., o_1$.
+> **Note**: When we are talking about **Hidden state $q$**, we are assuming that the next hidden state $q_t$ only depends on the current hidden state $q_{t-1}$, not the previous hidden states $$q_{t-1}, q_{t-2}, ..., q_1$$. On the other hand, when we are talking about **Observations $o$**, we are assuming that the current observation $o_t$ depends only on the current hidden state $q_t$, **not** the **previous hidden states** $$q_{t-1}, q_{t-2}, ..., q_1$$ or **previous observations** $$o_{t-1}, o_{t-2}, ..., o_1$$
 
 # 3. The three problems of HMM
 There are 3 problems in HMM we woud need to understand the concept and distinct from each other:
@@ -156,7 +156,7 @@ In mathematical form, we want to find $Q* = argmax_Q P(Q|O, \lambda)$.
 In mathematical form, we want to find $\lambda* = argmax_\lambda P(O|\lambda)$.
 
 ## 3.1. The Evaluation Problem & The Forward Algorithm
-### a. The Evaluation Problem
+### A - The Evaluation Problem
 In the last section, we have been introduced to how HMM work and define the Triplet Parameters (A, B, $\pi$). Now, we will move on to the first classic problem: the Evaluation Problem.
 
 Let's continue with the weather example. 
@@ -227,7 +227,7 @@ There must be a more efficient way to calculate the probability of an observatio
 
 The complexity of brute-force calculation is $O(N^T)$, while the complexity of the forward algorithm is $O(N^2T)$.
 
-### b. The Forward Algorithm
+### B - The Forward Algorithm
 Let's remember how brute-force works, we have to sum over all possible sequences of hidden states, but why is that inefficient?
 Let's take an example:
 
@@ -267,7 +267,7 @@ $$\begin{array}{c|ccc}
 We want to calculate: 
 $$P(O \mid \lambda) = P(3, 1 \mid \lambda)$$
 
-**A — Brute Force**
+**a. Brute Force**
 
 Since we have 2 timestep and 2 hidden states, we have $2^2 = 4$ possible hidden state sequences: 
 
@@ -283,7 +283,7 @@ The result would be the sum of all these probabilities.
 
 We can see really clearly that we have to calculate the probability of the same hidden state multiple times.
 
-**B — Forward Algorithm**
+**b. Forward Algorithm**
 
 The Forward Algorithm idea is only to calculate the probability of an observation sequence in a more efficient way.
 
@@ -295,14 +295,58 @@ $$\alpha_1(C) = P(3, C) = P(C)P(3 \mid C) = 0.2 \cdot 0.1 = 0.02$$
 
 **Step 2**: Then, we move to time step 2 with new observation $o_2 = 1$:
 
-To calculate probability of the observation $o_2 = 1$, we see that we have the 2 hidden state H or C can lead to $o_2 = 1$. So, we need to calculate $P(1,H)$ and $P(1,C)$. However, we also need to multiply the previous hidden state probabilities to the current hidden state probabilities. we need to calculate probability of the first step (which might also be H or C, that then lead to observation $o_2 = 1$). So, we need to calculate from the first timestep the $P(1, H) = P(H) \cdot P(1|H)$ and also the $P(1, C) = P(C) \cdot P(1|C)$ to multiply with the probability of the second step. 
+To calculate probability of the observation $$o_2 = 1$$, we see that we have the 2 hidden state H or C can lead to $$o_2 = 1$$. 
+So we need to calculate the probability of generating 1 at the seconnd time step from hidden state H or hidden state C. However, hidden state H at the second time step is also has to be calculated by multiplying with its previous hidden state probabilities:
 
-> Notice that we already done that by calculating $\alpha_1(H)$ and $\alpha_1(C)$ in Step 1, so we can just reuse it.
+ $$P(H) = P(C,H) * P(H,H) = P(C). P(H|C) + P(H).P(H|H)$$
 
-Probability to generate H for second step: 
-$$\alpha_1(C) \cdot P(H|C) + \alpha_1(H) \cdot P(H|H)$$
-Next is probability from H to generate 1: we multiply by $P(1|H)$
+Then we would multiply the probability  of generating 1 from H at the second time step, so we would have:
+alpha_2(H) = (P(C). P(H|C) + P(H).P(H|H)) * P(1|H)
 
-And the result for generating observation at second step $o_2 = 1$ from $t_2 = H$ is: $\alpha_2(H) = [\alpha_1(C) \cdot P(H|C) + \alpha_1(H) \cdot P(H|H)] \cdot P(1|H)$
+= (0.02*0.4 + 0.32*0.7) * 0.2 = 0.0216
 
-Same as: $\alpha_2(C) = [\alpha_1(C)P(C|C) + \alpha_1(H)P(C|H)]P(1|C)$
+Tuong tu, we do the same with  the case when hidden state at the second time step is C, find the prob of generating C from the first time step being H or C, and then multiply it with the prob of generating 1 from C at the second time step:
+alpha_2(C) = (P(C). P(C|C) + P(H).P(C|H)) * P(1|C)
+
+= (0.02*0.6 + 0.32*0.3) * 0.5 = 0.216
+
+Finally, these alpha values would be reused over and over again so that we don't have to recalculate them and this is basically the idea of Dynamic Programming in Forward Algorithm. 
+
+## 3.2. The Decoding Problem & The Viterbi Algorithm
+So what differs the Evaluating Problem with the Decoding Problem? So the Evaluating Problem asks: **What is the probability of an observation sequence given the HMM parameters?** Then we would have to calculate the sum of all the probabilities of the hidden state sequences that can generate the observation sequence. In contrast, the Decoding Problem asks: **What is the most likely sequence of hidden states given the observation sequence and  the HMM parameters?** So then, we would need to find the maximum probability among all possible hidden state sequences that can generate the observation sequence, instead of adding them up to find the sum. 
+
+In short, the formal the Decoding Problem is:
+
+$$Q∗ = argQmaxP(Q∣O)$$
+
+Which means we want to find the hidden state sequence Q* such that the probability of Q* given the observation O is maximized. 
+
+In the formula, Q represents a random sequence of hidden states, and O represents the observations. The function argmax returns the value of Q that maximizes the probability P(Q|O), not the value of the probability.
+
+Now, break down the Mathematics of the formula, this should be nearly the same as the formula from the Evaluating Problem but instead of taking the sum, we take the maximum probability:
+
+In formula:
+
+$$Q∗ = argQmaxP(Q∣O)$$
+
+we have:
+$$P(Q∣O)=P(O)P(O∣Q)P(Q)​$$
+so:
+$$Q∗ = argQmaxP(O)P(O∣Q)P(Q)​$$
+
+Notice that, we can remove $P(O)$ from the formula since it is a constant and it is the same for all hidden state sequences, so we have:
+$$Q∗ = argQmaxP(O∣Q)P(Q)$$
+
+Next, we have:
+
+$$P(Q)=πq1​​t=2∏T​aqt−1​qt​​$$
+
+P(O∣Q)=t=1∏T​bqt​​(ot​)
+
+Combine together, we have:
+
+Q∗=argQmax​(πq1​​t=2∏T​aqt−1​qt​​t=1∏T​bqt​​(ot​))
+
+This has been clearly proved mathematically in the previous section of the Evaluating Problem, but instead of taking the sum, we take the maximum probability. So naturally, there must be a more efficient way to calculate the maximum probability among all possible hidden state sequences that can generate the observation sequence. That is where the **Viterbi Algorithm** comes in.
+
+Basically, this is the same as the Forward Algorithm but instead of saving the sum of the previous probabilities at each step, we save the maximum probability among all of them. Understanding the upper example, you should be equipped more than enough to understand the Viterbi Algorithm.
