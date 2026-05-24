@@ -298,10 +298,10 @@ $$\alpha_1(C) = P(3, C) = P(C)P(3 \mid C) = 0.2 \cdot 0.1 = 0.02$$
 To calculate probability of the observation $$o_2 = 1$$, we see that we have the 2 hidden state H or C can lead to $$o_2 = 1$$. 
 So we need to calculate the probability of generating 1 at the seconnd time step from hidden state H or hidden state C. However, hidden state H at the second time step is also has to be calculated by multiplying with its previous hidden state probabilities:
 
- $$P(H) = P(C,H) * P(H,H) = P(C). P(H \mid C) + P(H).P(H \mid H)$$
+ $$P(H) = P(C,H) + P(H,H) = P(C). P(H \mid C) + P(H).P(H \mid H)$$
 
 Then we would multiply the probability  of generating 1 from H at the second time step, so we would have:
-alpha_2(H) = (P(C). P(H \mid C) + P(H).P(H \mid H)) * P(1 \mid H)
+$$alpha_2(H) = (P(C). P(H \mid C) + P(H).P(H \mid H)) * P(1 \mid H)$$
 
 = (0.02*0.4 + 0.32*0.7) * 0.2 = 0.0216
 
