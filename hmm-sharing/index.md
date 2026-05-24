@@ -143,7 +143,7 @@ There are 3 problems in HMM we woud need to understand the concept and distinct 
 
 Calculate the probability an observation sequence $O = (o_1, o_2, ..., o_T)$ to appear when we know the model $\lambda = (A, B, \pi)$. 
 
-In mathematical form, we want to find $P(O|\lambda)$.
+In mathematical form, we want to find $P(O \mid \lambda)$.
 
 2. **The Decoding Problem**: 
 
