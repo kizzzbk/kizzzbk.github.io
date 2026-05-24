@@ -219,7 +219,7 @@ $$= \prod_{t=1}^T P(o_t \mid q_t)$$
 3. Combine and we have:
 $$P(O \mid \lambda) =  \sum_{Q} P(O,Q|\lambda) $$
 $$=  \sum_{Q} P(O∣Q,λ)P(Q∣λ)$$
-$$= \sum_{Q} \left( \pi_{q_1} \prod_{t=2}^T a_{q_{t-1}q_t} \prod_{t=1}^T b_{q_t}(o_t) \right)$$
+$$= \sum_{Q} \left( \pi_{q_1} \prod_{t=2}^T P(q_t \mid q_{t-1}) \prod_{t=1}^T P(o_t \mid q_t) \right)$$
 
 Here is the big problem, if we have $N$ hidden states and $T$ observations, the number of possible hidden state sequences is $N^T$. Simply, we cannot sum over all possible sequences of hidden states when $N$ and $T$ are large. 
 
@@ -317,7 +317,7 @@ So what differs the Evaluating Problem with the Decoding Problem? So the Evaluat
 
 In short, the formal the Decoding Problem is:
 
-$$Q∗ = argQmaxP(Q∣O)$$
+$$Q^* = \arg\max_Q P(Q \mid O)$$
 
 Which means we want to find the hidden state sequence Q* such that the probability of Q* given the observation O is maximized. 
 
@@ -327,26 +327,45 @@ Now, break down the Mathematics of the formula, this should be nearly the same a
 
 In formula:
 
-$$Q∗ = argQmaxP(Q∣O)$$
+$$Q^* = \arg\max_Q P(Q \mid O)$$
 
 we have:
-$$P(Q∣O)=P(O)P(O∣Q)P(Q)​$$
-so:
-$$Q∗ = argQmaxP(O)P(O∣Q)P(Q)​$$
+
+$$Q^* = \arg\max_Q \frac{P(O \mid Q)P(Q)}{P(O)}$$
 
 Notice that, we can remove $P(O)$ from the formula since it is a constant and it is the same for all hidden state sequences, so we have:
-$$Q∗ = argQmaxP(O∣Q)P(Q)$$
+
+$$Q^* = \arg\max_Q P(O \mid Q)P(Q)$$
 
 Next, we have:
 
-$$P(Q)=πq1​​t=2∏T​aqt−1​qt​​$$
+$$P(Q) = \pi_{q_1} \prod_{t=2}^T a_{q_{t-1}q_t}$$
 
-P(O∣Q)=t=1∏T​bqt​​(ot​)
+$$P(O \mid Q) = \prod_{t=1}^T b_{q_t}(o_t)$$
 
 Combine together, we have:
 
-Q∗=argQmax​(πq1​​t=2∏T​aqt−1​qt​​t=1∏T​bqt​​(ot​))
+$$Q^* = \arg\max_Q \left( \pi_{q_1} \prod_{t=2}^T P(q_t \mid q_{t-1})\prod_{t=1}^T P(o_t \mid q_t) \right)$$
 
 This has been clearly proved mathematically in the previous section of the Evaluating Problem, but instead of taking the sum, we take the maximum probability. So naturally, there must be a more efficient way to calculate the maximum probability among all possible hidden state sequences that can generate the observation sequence. That is where the **Viterbi Algorithm** comes in.
 
 Basically, this is the same as the Forward Algorithm but instead of saving the sum of the previous probabilities at each step, we save the maximum probability among all of them. Understanding the upper example, you should be equipped more than enough to understand the Viterbi Algorithm.
+
+## 3.3. The Learning Problem & The Baum-Welch Algorithm (Forward - Backward Algorithm)
+While the Evaluating Problem asks: "What is the probability of an observation sequence?" and the Decoding Problem asks: "What is the most likely sequence of hidden states given the observation sequence?", the Learning Problem asks: **"What are the HMM parameters that best explain the observation sequence?"**
+
+So what do we want to learn? We're only given a sequence of observations,and we need to find out the prob between each states and between each states and observations, or in other words, we want to learn the HMM parameters $$\lambda = (A, B, \pi)$$ that generate best the given observation sequence.
+
+But what is the best parameters? That would be the one that maximize the probability of observing the given observation sequence:
+
+$$P(O \mid \lambda)$$
+
+In other words, we want to find the parameters $\lambda$ that maximize the probability of the observation sequence $O$.
+
+Mathematically, we have formula:
+
+$$\lambda^* = \arg\max_{\lambda} P(O \mid \lambda)$$
+
+> Note: The idea of the 3 Problems should be clearly explained like following: Evaluation Problem: evaluates the Model, Decoding Problem: finds the hidden path, Learning Problem: finds the model.
+
+So what makes this Problem difficult? The difficulties of this Problem lie in the fact that we don't know the hidden states since we're only given the observations, we can't directly calculate the probability of the observation sequence. The solution for this is to use the **Baum-Welch Algorithm**, which is a specific case of the Expectation-Maximization (EM) algorithm. 
